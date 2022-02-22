@@ -11,7 +11,7 @@ const App = () => {
   async function handleClick(e) {
     let urlProduto = `https://ranekapi.origamid.dev/json/api/produto/${e.target.id}`;
     // setProduto(valueButton);
-
+    setCarregando(true);
     const response = await fetch(urlProduto);
     const json = await response.json();
     setProduto(json);

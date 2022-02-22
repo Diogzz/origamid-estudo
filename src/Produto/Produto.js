@@ -12,7 +12,12 @@ const Produto = ({ produto }) => {
       </ul>
       <div style={{ display: 'flex' }}>
         {produto.fotos.map(({ src, titulo }) => (
-          <img key={titulo} src={src} alt={titulo} style={{ width: '200px', marginRight: '1rem' }} />
+          <img
+            key={titulo}
+            src={src}
+            alt={titulo}
+            style={{ width: '200px', marginRight: '1rem' }}
+          />
         ))}
       </div>
     </div>
