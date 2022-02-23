@@ -4,27 +4,30 @@ import Produto from './Produto/Produto';
 
 const App = () => {
   //começa com o produto vindo vazio
-  const [produto, setProduto] = React.useState(null);
+  const [linkProduto, setLinkProduto] = React.useState(null);
   const [carregando, setCarregando] = React.useState(null);
+  const [produto, setProduto] = React.useState(null);
+  const [contador, setContador] = React.useState(0);
 
-  // função de click do button já alterando o estado do produto
-  async function handleClick(e) {
-    let urlProduto = `https://ranekapi.origamid.dev/json/api/produto/${e.target.id}`;
-    // setProduto(valueButton);
-    setCarregando(true);
-    const response = await fetch(urlProduto);
-    const json = await response.json();
-    setProduto(json);
-    setCarregando(false);
+  function handleClick(e) {
+    setLinkProduto(e.target.id);
   }
-  // console.log(fetchProdutos(`https://ranekapi.origamid.dev/json/api/produto/${produto}`));
+
+  React.useEffect(() => {
+    setCarregando(true);
+    fetch(
+      `https://ranekapi.origamid.dev/json/api/produto/${
+        linkProduto ? linkProduto : `smartphone`
+      }`,
+    )
+      .then((response) => response.json())
+      .then((json) => setProduto(json));
+    setCarregando(false);
+    setContador(0);
+  }, [linkProduto]);
 
   return (
     <>
-      <section>
-        {carregando && <p>Carregando...</p>}
-        {!carregando && produto && <Produto produto={produto} />}
-      </section>
       <section style={{ display: 'flex', marginTop: '50px' }}>
         <Button id="smartphone" handleClick={handleClick}>
           SmartPhone
@@ -35,6 +38,13 @@ const App = () => {
         <Button id="notebook" handleClick={handleClick}>
           Notebook
         </Button>
+      </section>
+      <section>
+        <Button handleClick={() => setContador(contador + 1)}>
+          {contador}
+        </Button>
+        {carregando && <p>Carregando...</p>}
+        {!carregando && produto && <Produto valorTotal={contador} produto={produto} />}
       </section>
     </>
   );

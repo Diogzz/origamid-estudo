@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Produto = ({ produto }) => {
+const Produto = ({ produto, valorTotal }) => {
   return (
     <div
       id={produto.nome}
@@ -8,7 +8,9 @@ const Produto = ({ produto }) => {
     >
       <ul style={{ listStyle: 'none' }}>
         <li>Nome: {produto.nome}</li>
-        <li>Preco: {produto.preco}</li>
+        <li>Preco: R${produto.preco}</li>
+        <li>Preco Total: R${Number(produto.preco) * valorTotal}</li>
+        {/* <li>Preco Total: R${((Number(produto.preco)) * contador)}</li> */}
       </ul>
       <div style={{ display: 'flex' }}>
         {produto.fotos.map(({ src, titulo }) => (
